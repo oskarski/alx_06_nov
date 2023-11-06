@@ -6,7 +6,10 @@ const $messageInput = document.getElementById('message');
 
 const $messageList = document.getElementById('message-list');
 
-const messagesArray = [];
+// Ustawianie domyslnej wartosci przy uzyciu operatora || lub ??
+// const persistedMessagesString = localStorage.getItem('messages') ?? '[]'; <- podobnie do || ale tylko dla null i undefined
+const persistedMessagesString = localStorage.getItem('messages') || '[]';
+const messagesArray = JSON.parse(persistedMessagesString);
 
 const validateAuthorField = (authorValue) => {
     if (!$authorErrorMessage)  {
@@ -88,6 +91,8 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
 
     messagesArray.push(new Message(author, message));
 
+    localStorage.setItem('messages', JSON.stringify(messagesArray))
+
     renderMesssages(messagesArray);
 });
 
@@ -98,3 +103,5 @@ $authorInput.addEventListener('input', (e) => {
 $messageInput.addEventListener('input', (e) => {
     validateMessageField(e.target.value);
 });
+
+renderMesssages(messagesArray);
