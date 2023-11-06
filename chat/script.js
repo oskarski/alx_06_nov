@@ -4,6 +4,7 @@ const $authorInput = document.getElementById('author');
 const $messageErrorMessage = document.getElementById('message-error');
 const $messageInput = document.getElementById('message');
 
+const $messageList = document.getElementById('message-list');
 
 const validateAuthorField = (authorValue) => {
     if (!$authorErrorMessage)  {
@@ -61,6 +62,19 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
     if (!isAuthorValid) {
         $authorInput.focus();
     }
+
+    if (!isAuthorValid || !isMessageValid) return;
+
+    const $newMessageListItem = document.createElement('li');
+
+    $newMessageListItem.classList.add('list-group-item');
+
+    $newMessageListItem.innerHTML = `
+        <div class="fw-bold">${author}</div>
+        <span>${message}</span>
+    `;
+
+    $messageList.appendChild($newMessageListItem);
 });
 
 $authorInput.addEventListener('input', (e) => {
