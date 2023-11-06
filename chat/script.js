@@ -9,34 +9,38 @@ const validateAuthorField = (authorValue) => {
     if (!$authorErrorMessage)  {
         alert('Cos poszlo nie tak!');
         $authorInput.classList.add('error-border');
-        return;
+        return false;
     }
     // Early return 
     if (!authorValue) {
         $authorErrorMessage.innerText = 'Pole wymagane!';
         $authorInput.classList.add('error-border');
-        return;
+        return false;
     }
 
     $authorInput.classList.remove('error-border');
     $authorErrorMessage.innerText = '';
+
+    return true;
 }
 
 const validateMessageField = (messageValue) => {
     if (!messageValue) {
         document.getElementById('message-error').innerText = 'Pole wymagane!';
         document.getElementById('message').classList.add('error-border');
-        return;
+        return false;
     } 
 
     if (messageValue.length < 2) {
         document.getElementById('message-error').innerText = 'Pole musi miec min 2 znaki!';
         document.getElementById('message').classList.add('error-border');
-        return;
+        return false;
     }
 
     $messageInput.classList.remove('error-border');
     $messageErrorMessage.innerText = '';
+
+    return true;
 }
 
 
@@ -48,8 +52,15 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
     const author = formData.get('author');
     const message = formData.get('message');
 
-    validateAuthorField(author);
-    validateMessageField(message);
+    const isAuthorValid = validateAuthorField(author);
+    const isMessageValid = validateMessageField(message);
+
+    if (!isMessageValid) {
+        $messageInput.focus();
+    }
+    if (!isAuthorValid) {
+        $authorInput.focus();
+    }
 });
 
 $authorInput.addEventListener('input', (e) => {
