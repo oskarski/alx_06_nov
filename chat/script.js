@@ -6,6 +6,8 @@ const $messageInput = document.getElementById('message');
 
 const $messageList = document.getElementById('message-list');
 
+const messagesArray = [];
+
 const validateAuthorField = (authorValue) => {
     if (!$authorErrorMessage)  {
         alert('Cos poszlo nie tak!');
@@ -44,6 +46,25 @@ const validateMessageField = (messageValue) => {
     return true;
 }
 
+class Message {
+    constructor(author, body) {
+        this.author = author;
+        this.body = body;
+    }
+}
+
+const renderMesssages = (messagesArray) => {
+    $messageList.innerHTML = '';
+
+    for (const message of messagesArray) {
+        $messageList.innerHTML += `
+            <li class="list-group-item">
+                <div class="fw-bold">${message.author}</div>
+                <span>${message.body}</span>
+            </li>
+        `;
+    }
+}
 
 document.querySelector('#message-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -65,16 +86,9 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
 
     if (!isAuthorValid || !isMessageValid) return;
 
-    const $newMessageListItem = document.createElement('li');
+    messagesArray.push(new Message(author, message));
 
-    $newMessageListItem.classList.add('list-group-item');
-
-    $newMessageListItem.innerHTML = `
-        <div class="fw-bold">${author}</div>
-        <span>${message}</span>
-    `;
-
-    $messageList.appendChild($newMessageListItem);
+    renderMesssages(messagesArray);
 });
 
 $authorInput.addEventListener('input', (e) => {
