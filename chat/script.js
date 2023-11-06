@@ -73,6 +73,7 @@ const renderMesssages = (messagesArray) => {
 
                 <button class="like-btn btn btn-info" ${message.liked && 'disabled'}>:)</button>
                 <button class="dislike-btn btn btn-warning"  ${message.disliked && 'disabled'}>:(</button>
+                <button class="delete-btn btn btn-danger">Usun</button>
             </li>
         `;
     }
@@ -100,6 +101,25 @@ const renderMesssages = (messagesArray) => {
     for (const dislikeBtn of dislikesBtn) {
         dislikeBtn.addEventListener('click', (e) => {
             e.target.setAttribute('disabled', true);
+        });
+    }
+
+    const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
+
+    for (const deleteBtn of deleteBtns) {
+        deleteBtn.addEventListener('click', (e) => {
+            console.log('USUN')
+            const $parentLi = e.target.parentElement;
+
+            // Znajdz wiadomosc, ktorej tresc pasuje do tresci z li, w ktorym jest klikniety przycisk 
+            const indexOfMessageToDelete = messagesArray.findIndex(msg => {
+                return msg.body === $parentLi.querySelector('span').innerText;
+            });
+
+            messagesArray.splice(indexOfMessageToDelete, 1);
+
+            saveData();
+            renderMesssages(messagesArray);
         });
     }
 }
