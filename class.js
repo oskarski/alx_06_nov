@@ -146,3 +146,28 @@ arr.arr_second =  '22222'
 const { arr_first, arr_second } = arr;
 console.log(arr_first, arr_second);
 console.log(arr.arr_first);
+
+
+const json1 = '{}';
+console.log(
+    json1,
+    JSON.parse(json1)
+);
+
+const json2 = '{"login": "oskar", "age": 2}';
+console.log(
+    json2,
+    JSON.parse(json2)
+);
+
+const signInDto = new SignInDto("Oskar", "1234");
+
+console.log(signInDto);
+signInDto.print();
+console.log(JSON.stringify(signInDto))
+
+const stringFromDto = JSON.stringify(signInDto);
+const dtoFromString = JSON.parse(stringFromDto);
+
+console.log(dtoFromString)
+console.log(new SignInDto(dtoFromString.login, dtoFromString.password))
