@@ -4,6 +4,8 @@ const $authorInput = document.getElementById('author');
 const $messageErrorMessage = document.getElementById('message-error');
 const $messageInput = document.getElementById('message');
 
+const $resetButton = document.getElementById('reset-btn');
+
 const $messageList = document.getElementById('message-list');
 
 // Ustawianie domyslnej wartosci przy uzyciu operatora || lub ??
@@ -157,6 +159,11 @@ $authorInput.addEventListener('input', (e) => {
 
 $messageInput.addEventListener('input', (e) => {
     validateMessageField(e.target.value);
+});
+
+$resetButton.addEventListener('click', () => {
+    $authorInput.value = null;
+    $messageInput.value = null;
 });
 
 renderMesssages(messagesArray);
